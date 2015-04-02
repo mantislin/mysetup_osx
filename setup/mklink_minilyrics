@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -d "${HOME}/Library/Application Support/com.crintsoft.MiniLyrics/Lyrics" ]; then
+    rm -rvf "${HOME}/Library/Application Support/com.crintsoft.MiniLyrics/Lyrics"
+    ln -s -v "${HOME}/Music/lyrics" "${HOME}/Library/Application Support/com.crintsoft.MiniLyrics/Lyrics"
+fi

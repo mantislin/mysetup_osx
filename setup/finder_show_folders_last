@@ -1,0 +1,24 @@
+#!/bin/sh
+
+sudo plutil -convert xml1 "/System/Library/CoreServices/Finder.app/Contents/Resources/English.lproj/InfoPlist.strings"
+
+open -R "/System/Library/CoreServices/Finder.app/Contents/Resources/English.lproj/InfoPlist.strings"
+
+echo "Now edit \"InfoPlist.strings\" file, and change section from:"
+echo ""
+echo "    <key>Folder</key>"
+echo "    <string>Folder</string>"
+echo ""
+echo "to:"
+echo ""
+echo "    <key>Folder</key>"
+echo "    <string> Folder</string>"
+echo ""
+echo "And save the file."
+
+echo "When you done, press [Enter] key, script will convert it back to binary."
+read
+
+sudo plutil -convert binary1 "/System/Library/CoreServices/Finder.app/Contents/Resources/English.lproj/InfoPlist.strings"
+
+sudo killall -HUP Finder
