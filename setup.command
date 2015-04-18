@@ -88,6 +88,13 @@ if [ -f "${PWD}/setup/pmset_hibernatemode_on" ]; then
     "${PWD}/setup/pmset_hibernatemode_on"
 fi
 
+# -- show Library folder in HOME
+
+if [ -f "${PWD}/setup/library_folder_hidden" ]; then
+    chmod +x "${PWD}/setup/library_folder_hidden"
+    "${PWD}/setup/library_folder_hidden"
+fi
+
 # -- finder show hidden files
 
 if [ -f "${PWD}/setup/finder_hidden_files_show" ]; then
