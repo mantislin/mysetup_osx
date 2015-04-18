@@ -114,7 +114,7 @@ fi
 # -- Alcatraz, the plugins manager
 
 if [ -d "/Applications/Xcode.app" -o -d "${HOME}/Applications/Xcode.app" ]; then
-    curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
+    sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
 fi
 
 # ========== make links
