@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "=================================================="
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "======== Proxy dependencies ========"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+echo ""
+echo ">>>>> Install python and python3..."
+brew install python python3
+echo ">>>>> Install PyOpenSSL for python..."
+sudo easy_install PyOpenSSL
+echo ">>>>> Install PyCrypto for python..."
+sudo easy_install PyCrypto
+echo ">>>>> Install cow via curl..."
+[ ! -d "${HOME}/local/cow" ] && mkdir -pv "${HOME}/local/cow"
+pushd "${HOME}/local/cow" && (
+    curl -L git.io/cow | bash
+    popd
+)
+echo ">>>>> Done!"

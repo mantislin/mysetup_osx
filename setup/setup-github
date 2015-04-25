@@ -1,0 +1,23 @@
+#!/bin/sh
+
+echo "=================================================="
+echo ">>>>> Setup github global configs..."
+"./setup-github-global-configs"
+echo ">>>>> Done!"
+
+if [ ! -f "${HOME}/.ssh/id_rsa" ]; then
+    echo ">>>>> Generate github ssh key..."
+    "./setup-github-generate-ssh-key"
+    echo ">>>>> Done!"
+fi
+
+echo ">>>>> Load my dotfiles..."
+[ ! -d "${github}/mantislin_dotfiles" ] && (
+    git clone -b "dotfiles_1.0" "https://github.com/mantislin/dotfiles" "${github}/mantislin_dotfiles" && (
+        pushd "${github}/mantislin_dotfiles"
+        chmod +x setup.command
+        ./setup.command
+        popd
+    )
+)
+echo ">>>>> Done!"

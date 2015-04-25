@@ -11,6 +11,7 @@ git config --global core.excludesfile ~/.gitignore_global
 git config --global difftool.gvimdiff2.cmd 'mvim -f -d -c "wincmd H" "$REMOTE" "$LOCAL"'
 git config --global mergetool.gvimdiff3.cmd 'mvim -f -d -c "wincmd J" "$MERGED" "$LOCAL" "$BASE" "$REMOTE"'
 git config --global mergetool.vimdiff3.cmd 'vim -f -d -c "wincmd J" "$MERGED" "$LOCAL" "$BASE" "$REMOTE"'
+
 git config --global diff.tool gvimdiff2
 git config --global merge.tool gvimdiff3
 git config --global merge.conflictstyle diff3

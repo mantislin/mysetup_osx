@@ -1,127 +1,147 @@
 #!/bin/sh
 
-# ========== github folder
+# ========== base
 
-github="${HOME}/github"
-if [ ! -d "${HOME}/Documents/github" ]; then mkdir "${HOME}/Documents/github"; fi
-if [ ! -d "${github}" ]; then ln -s "${HOME}/Documents/github" "${github}"; fi
+# -- Ask for the administrator password upfront.
+sudo -v
 
-# ========== geek tools
+# Keep-alive: update existing `sudo` time stamp until the script has finished.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# -- intall RubyGems via ruby
+# ========== base
 
-if [ ! -d "${github}/rubygems_rubygems" ]; then
-    git clone "https://github.com/rubygems/rubygems" "${github}/rubygems_rubygems"
-fi
-pushd "${github}/rubygems_rubygems"
-    sudo ruby setup.rb
-popd
-
-# -- install Homebrew via
-
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-# -- install cocoapods via gem
-
-sudo gem install cocoapods
-
-# -- install composer via gem
-
-sudo gem install composer
-
-# -- install oh-my-zsh via curl
-
-curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
-# -- update openssl via brew
-brew install openssl
-
-# ========== custom configurations
-
-# -- dotfiles
-
-if [ ! -d "${github}/mantislin_dotfiles" ]; then
-    git clone "https://github.com/mantislin/dotfiles" "${github}/mantislin_dotfiles"
-fi
-pushd "${github}/mantislin_dotfiles"
-    chmod +x setup.command
-    ./setup.command
-popd
-
-# -- github global configurations
-
-if [ -f "${PWD}/setup/git_global_configs" ]; then
-    chmod +x "${PWD}/setup/git_global_configs"
-    "${PWD}/setup/git_global_configs"
-fi
-
-# -- github generate ssh keys
-
-if [ -f "${PWD}/setup/git_sshkey_generating" ]; then
-    chmod +x "${PWD}/setup/git_sshkey_generating"
-    "${PWD}/setup/git_sshkey_generating"
-fi
-
-# ========== proxy cases: goagent and cow
-
-# -- config python for running goagent
+echo "=================================================="
+echo ">>>>> Install command line tools, xcode-select --install"
 xcode-select --install
-brew install python python3
-sudo easy_install PyOpenSSL
-sudo easy_install PyCrypto
+echo ">>>>> Done!"
 
-# -- cow
+# ========== environments
 
-if [ ! -d "${HOME}/local/cow" ]; then
-    mkdir -pv "${HOME}/local/cow"
+echo "=================================================="
+echo ">>>>> Setup BITBUCKET path..."
+svnname=bitbucket
+if [ ! -d "${HOME}/Documents/${svnname}" ]; then
+    mkdir "${HOME}/Documents/${svnname}"
+    if [ -d "${HOME}/Documents/${svnname}" -a ! -d "${HOME}/${svnname}" ]; then
+        ln -s "${HOME}/Documents/${svnname}" "${HOME}/${svnname}"
+    fi
 fi
-pushd "${HOME}/local/cow"
-    curl -L git.io/cow | bash
-popd
+[ -z "$bitbucket" ] && export bitbucket="${HOME}/bitbucket"
+echo ">>>>> Done!"
 
-# ========== OSX configurations
-
-# -- turn on hibernate mode
-
-if [ -f "${PWD}/setup/pmset_hibernatemode_on" ]; then
-    chmod +x "${PWD}/setup/pmset_hibernatemode_on"
-    "${PWD}/setup/pmset_hibernatemode_on"
+echo "=================================================="
+echo ">>>>> Setup GITHUB path..."
+svnname=github
+if [ ! -d "${HOME}/Documents/${svnname}" ]; then
+    mkdir "${HOME}/Documents/${svnname}"
+    if [ -d "${HOME}/Documents/${svnname}" -a ! -d "${HOME}/${svnname}" ]; then
+        ln -s "${HOME}/Documents/${svnname}" "${HOME}/${svnname}"
+    fi
 fi
+[ -z "$github" ] && export github="${HOME}/github"
+echo ">>>>> Done!"
 
-# -- show Library folder in HOME
-
-if [ -f "${PWD}/setup/library_folder_hidden" ]; then
-    chmod +x "${PWD}/setup/library_folder_hidden"
-    "${PWD}/setup/library_folder_hidden"
+echo "=================================================="
+echo ">>>>> Setup SUBVERSION path..."
+svnname=subversion
+if [ ! -d "${HOME}/Documents/${svnname}" ]; then
+    mkdir "${HOME}/Documents/${svnname}"
+    if [ -d "${HOME}/Documents/${svnname}" -a ! -d "${HOME}/${svnname}" ]; then
+        ln -s "${HOME}/Documents/${svnname}" "${HOME}/${svnname}"
+    fi
 fi
+[ -z "$subversion" ] && export subversion="${HOME}/subversion"
+echo ">>>>> Done!"
 
-# -- finder show hidden files
+## # ========== geek tools
 
-if [ -f "${PWD}/setup/finder_hidden_files_show" ]; then
-    chmod +x "${PWD}/setup/finder_hidden_files_show"
-    "${PWD}/setup/finder_hidden_files_show"
-fi
+## # -- oh-my-zsh
 
-# -- finder show folders first
+## echo ">>>>> Install oh-my-zsh via curl..."
+## curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+## echo ">>>>> Done!"
 
-if [ -f "${PWD}/setup/finder_show_folders_last" ]; then
-    chmod +x "${PWD}/setup/finder_show_folders_last"
-    "${PWD}/setup/finder_show_folders_last"
-fi
+## # -- rubygem about
 
-# ========== Xcode cases
+## pushd setup
+## chmod +x "./setup-rubygem"
+## "./setup-rubygem"
+## popd
 
-# -- Alcatraz, the plugins manager
+## # -- homebrew about
 
-if [ -d "/Applications/Xcode.app" -o -d "${HOME}/Applications/Xcode.app" ]; then
-    sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
-fi
+## pushd setup
+## chmod +x "./setup-homebrew"
+## "./setup-homebrew"
+## popd
 
-# ========== make links
+## echo "=================================================="
+## echo ">>>>> Install some command line tools via homebrew..."
+## chmod +x "setup/setup-homebrew-cli-tools"
+## "setup/setup-homebrew-cli-tools"
+## echo ">>>>> Done!"
 
-# -- minilyrics
+## # ========== custom configurations
 
-if [ -f "${PWD}/setup/mklink_minilyrics" ]; then
-    chmod +x "${PWD}/setup/mklink_minilyrics"
-    "${PWD}/setup/mklink_minilyrics"
-fi
+## # -- github configs
+
+## pushd setup
+## chmod +x "./setup-github"
+## "./setup-github"
+## popd
+
+## # ========== programs
+
+## # -- proxy about
+
+## pushd setup
+## chmod +x "./setup-proxies"
+## "./setup-proxies"
+## popd
+
+#### # ========== OSX configurations
+
+#### # -- turn on hibernate mode
+
+#### if [ -f "${PWD}/setup/pmset_hibernatemode_on" ]; then
+####     chmod +x "${PWD}/setup/pmset_hibernatemode_on"
+####     "${PWD}/setup/pmset_hibernatemode_on"
+#### fi
+
+#### # -- show Library folder in HOME
+
+#### if [ -f "${PWD}/setup/library_folder_hidden" ]; then
+####     chmod +x "${PWD}/setup/library_folder_hidden"
+####     "${PWD}/setup/library_folder_hidden"
+#### fi
+
+#### # -- finder show hidden files
+
+#### if [ -f "${PWD}/setup/finder_hidden_files_show" ]; then
+####     chmod +x "${PWD}/setup/finder_hidden_files_show"
+####     "${PWD}/setup/finder_hidden_files_show"
+#### fi
+
+#### # -- finder show folders first
+
+#### if [ -f "${PWD}/setup/finder_show_folders_last" ]; then
+####     chmod +x "${PWD}/setup/finder_show_folders_last"
+####     "${PWD}/setup/finder_show_folders_last"
+#### fi
+
+#### # ========== Xcode cases
+
+#### # -- Alcatraz, the plugins manager
+
+#### if [ -d "/Applications/Xcode.app" -o -d "${HOME}/Applications/Xcode.app" ]; then
+####     sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
+#### fi
+
+#### # ========== make links
+
+#### # -- minilyrics
+
+#### if [ -f "${PWD}/setup/mklink_minilyrics" ]; then
+####     chmod +x "${PWD}/setup/mklink_minilyrics"
+####     "${PWD}/setup/mklink_minilyrics"
+#### fi

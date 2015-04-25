@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "=================================================="
+echo ">>>>> Install rubygem from github..."
+if [ ! -d "${github}/rubygems_rubygems" ]; then
+    git clone "https://github.com/rubygems/rubygems" "${github}/rubygems_rubygems"
+fi
+pushd "${github}/rubygems_rubygems"
+    sudo ruby --verbose setup.rb
+popd
+echo ">>>>> Done!"
+
+echo "=================================================="
+echo ">>>>> Install cocoapods via rubygem..."
+sudo gem install --verbose cocoapods
+echo ">>>>> Done!"
+
+echo "=================================================="
+echo ">>>>> Install composer via rubygem..."
+sudo gem install --verbose composer
+echo ">>>>> Done!"
