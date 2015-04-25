@@ -1,3 +1,0 @@
-#!/bin/sh
-
-chflags nohidden "${HOME}/Library"
