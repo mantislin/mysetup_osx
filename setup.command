@@ -62,7 +62,6 @@ echo ">>>>> Done!"
 ## echo ">>>>> Done!"
 
 ## # -- rubygem about
-
 ## pushd setup
 ## chmod +x "./setup-rubygem"
 ## "./setup-rubygem"
@@ -98,6 +97,19 @@ echo ">>>>> Done!"
 ## chmod +x "./setup-proxies"
 ## "./setup-proxies"
 ## popd
+
+## # -- Alcatraz, the plugins manager
+
+## if [ -d "/Applications/Xcode.app" -o -d "${HOME}/Applications/Xcode.app" ]; then
+    ## sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
+## fi
+
+# ========== osx configs
+
+pushd setup
+chmod +x "./setup-osx-configs"
+"./setup-osx-configs"
+popd
 
 #### # ========== OSX configurations
 
