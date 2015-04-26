@@ -161,7 +161,9 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightC
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
-# Trackpad: currentHost settings
+# Trackpad: global and currentHost settings
+
+defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
 
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
@@ -170,6 +172,7 @@ defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwip
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -int 1
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -int 1
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.rotateGesture -int 1
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.scaling -int 3
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.scrollBehavior -int 2
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -int 1
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerHorizSwipeGesture -int 0
@@ -178,8 +181,11 @@ defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerVertSwi
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerDoubleTapGesture -int 1
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerFromRightEdgeSwipeGesture -int 3
 
-# Mouse: currentHost settings
+# Mouse: global and currentHost settings
 
+defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
+
+defaults -currentHost write NSGlobalDomain com.apple.mouse.scaling -int 3
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string "TwoButton"
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseOneFingerDoubleTapGesture -int 1
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseTwoFingerDoubleTapGesture -int 3
@@ -644,7 +650,7 @@ tell application "Terminal"
     local allOpenedWindows
     local initialOpenedWindows
     local windowID
-    set themeName to "Solarized Dark xterm-256color"
+    set themeName to "Solarized Dark xterm-256color-mts"
 
     (* Store the IDs of all the open terminal windows. *)
     set initialOpenedWindows to id of every window
