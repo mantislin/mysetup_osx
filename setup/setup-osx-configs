@@ -127,6 +127,13 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
 
 ###############################################################################
+# Accounts
+###############################################################################
+
+# Disallow Guest Account to log in to this computer
+sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
+
+###############################################################################
 # SSD-specific tweaks                                                         #
 ###############################################################################
 
