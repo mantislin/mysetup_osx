@@ -135,7 +135,7 @@ sudo tmutil disablelocal
 
 # Disable hibernation (speeds up entering sleep mode)
 # 0 to disable, 25 to enable
-sudo pmset -a hibernatemode 0
+sudo pmset -a hibernatemode 25
 
 # Remove the sleep image file to save disk space
 sudo rm /Private/var/vm/sleepimage
