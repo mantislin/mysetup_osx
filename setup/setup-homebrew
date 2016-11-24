@@ -1,11 +1,15 @@
 #!/bin/sh
 
-echo "=================================================="
-echo ">>>>> Install homebrew via ruby..."
-ruby --verbose -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-echo ">>>>> Done!"
+command -v brew >/dev/null 2>/dev/null || (
 
-echo "=================================================="
-echo ">>>>> Install/Update openssl via homebrew..."
-brew install --verbose openssl
-echo ">>>>> Done!"
+    echo "=================================================="
+    echo ">>>>> Install homebrew via ruby..."
+    ruby --verbose -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo ">>>>> Done!"
+
+    echo "=================================================="
+    echo ">>>>> Install/Update openssl via homebrew..."
+    brew install --verbose openssl
+    echo ">>>>> Done!"
+
+)

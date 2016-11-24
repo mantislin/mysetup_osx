@@ -11,10 +11,14 @@ echo ">>>>> Install PyOpenSSL for python..."
 sudo easy_install PyOpenSSL
 echo ">>>>> Install PyCrypto for python..."
 sudo easy_install PyCrypto
-echo ">>>>> Install cow via curl..."
-[ ! -d "${HOME}/local/cow" ] && mkdir -pv "${HOME}/local/cow"
-pushd "${HOME}/local/cow" && (
-    curl -L git.io/cow | bash
-    popd
-)
-echo ">>>>> Done!"
+
+#Not using cow for a long time.
+#command -v cow >/dev/null 2>/dev/null || (
+#    echo ">>>>> Install cow via curl..."
+#    [ ! -d "${HOME}/local/cow" ] && mkdir -pv "${HOME}/local/cow"
+#    pushd "${HOME}/local/cow" && (
+#        curl -L git.io/cow | bash
+#        popd
+#    )
+#    echo ">>>>> Done!"
+#)
