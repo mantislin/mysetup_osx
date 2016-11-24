@@ -3,17 +3,23 @@
 # ========== base
 
 # -- Ask for the administrator password upfront.
-sudo -v
+if [ "$(id -u)" != "0" ]; then
+    sudo -v
+fi
 
 # Keep-alive: update existing `sudo` time stamp until the script has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+pushd "`dirname "$0"`" >/dev/null
+
 # ========== base
 
-echo "=================================================="
-echo ">>>>> Install command line tools, xcode-select --install"
-xcode-select --install
-echo ">>>>> Done!"
+command -v xcode-select >/dev/null 2>/dev/null || (
+    echo "=================================================="
+    echo ">>>>> Install command line tools, xcode-select --install"
+    xcode-select --install
+    echo ">>>>> Done!"
+)
 
 # ========== environments
 
@@ -53,56 +59,65 @@ fi
 [ -z "$subversion" ] && export subversion="${HOME}/subversion"
 echo ">>>>> Done!"
 
-## # ========== geek tools
+# ========== geek tools
 
-## # -- oh-my-zsh
+# -- oh-my-zsh
 
-## echo ">>>>> Install oh-my-zsh via curl..."
-## curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-## echo ">>>>> Done!"
+if [ ! -d "${HOME}/.oh-my-zsh" ]; then
+    echo ">>>>> Install oh-my-zsh via curl..."
+    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+    echo ">>>>> Done!"
+fi
 
-## # -- rubygem about
-## pushd setup
-## chmod +x "./setup-rubygem"
-## "./setup-rubygem"
-## popd
+# -- rubygem about
+pushd setup
+chmod +x "./setup-rubygem"
+"./setup-rubygem"
+popd
 
-## # -- homebrew about
+# -- homebrew about
 
-## pushd setup
-## chmod +x "./setup-homebrew"
-## "./setup-homebrew"
-## popd
+pushd setup
+chmod +x "./setup-homebrew"
+"./setup-homebrew"
+popd
 
-## echo "=================================================="
-## echo ">>>>> Install some command line tools via homebrew..."
-## chmod +x "setup/setup-homebrew-cli-tools"
-## "setup/setup-homebrew-cli-tools"
-## echo ">>>>> Done!"
+echo "=================================================="
+echo ">>>>> Install some command line tools via homebrew..."
+chmod +x "setup/setup-homebrew-cli-tools"
+"setup/setup-homebrew-cli-tools"
+echo ">>>>> Done!"
 
-## # ========== custom configurations
+# ========== custom configurations
 
-## # -- github configs
+# -- github configs
 
-## pushd setup
-## chmod +x "./setup-github"
-## "./setup-github"
-## popd
+pushd setup
+chmod +x "./setup-github"
+"./setup-github"
+popd
 
-## # ========== programs
+# ========== programs
 
-## # -- proxy about
+# -- proxy about
 
-## pushd setup
-## chmod +x "./setup-proxies"
-## "./setup-proxies"
-## popd
+pushd setup
+chmod +x "./setup-proxies"
+"./setup-proxies"
+popd
 
-## # -- Alcatraz, the plugins manager
-
-## if [ -d "/Applications/Xcode.app" -o -d "${HOME}/Applications/Xcode.app" ]; then
-    ## sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
-## fi
+## -- Alcatraz, the plugins manager
+##Alcatraz has been deprecated since Xcode8
+#
+#command -v xcode-select >/dev/null 2>/dev/null && (
+#    [ -z "${xcodePath}" ] && xcodePath="$(xcode-select --print-path)"
+#    [ ! -z "${xcodePath}" ] && xcodePath="${xcodePath%/*/*}"
+#    [ "${xcodePath:(-1)}" = "/" ] && xcodePath="${xcodePath%?}"
+#
+#    if [ -d "${xcodePath}" ]; then
+#        sudo curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
+#    fi
+#)
 
 # ========== osx configs
 
